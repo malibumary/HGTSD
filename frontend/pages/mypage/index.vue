@@ -13,23 +13,23 @@ export default {
     return {
       counter: 0,
       accounts: [],
-      aaa: null
+      web3js: null
     }
   },
   async mounted () {
     let web3 = window.web3
     window.addEventListener('load', function () {
       if (typeof web3 !== 'undefined') {
-        this.aaa = new Web3(web3.currentProvider)
+        this.web3js = new Web3(web3.currentProvider)
       } else {
         console.log('No web3? You should consider trying MetaMask!')
-        this.aaa = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+        this.web3js = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
       }
     })
   },
   methods: {
     async getaccounts () {
-      this.accounts = window.aaa.eth.accounts[0]
+      this.accounts = window.web3js.eth.accounts[0]
     }
   }
 }
