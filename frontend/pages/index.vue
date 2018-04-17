@@ -1,6 +1,11 @@
 <template>
   <section class="container">
     <img src="~assets/img/logo.png" alt="Nuxt.js Logo" class="logo" />
+    <div> 
+      <nuxt-link to="/mypage">
+        my page
+      </nuxt-link>
+    </div>
     <h1 class="title">
       USERS
     </h1>

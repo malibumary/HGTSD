@@ -16,13 +16,15 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: ['~/assets/css/main.css'], 
+  css: ['~/assets/css/main.css'],
   srcDir: 'frontend/',
   /*
   ** Add axios globally
   */
   build: {
-    vendor: ['axios'],
+    vendor:[
+      'axios'
+    ],
     /*
     ** Run ESLINT on save
     */
