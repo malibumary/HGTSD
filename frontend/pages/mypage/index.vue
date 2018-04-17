@@ -11,7 +11,6 @@ import * as Web3 from 'web3'
 export default {
   data () {
     return {
-      counter: 0,
       accounts: [],
       web3js: null
     }
