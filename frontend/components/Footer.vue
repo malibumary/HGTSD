@@ -1,5 +1,6 @@
 <template>
-  <footer>
-    Visit our website for more documentation : <a href="https://nuxtjs.org" target="_blank">nuxtjs.org</a>
-  </footer>
+    <!-- Footer -->
+    <footer class="w3-container w3-theme-dark w3-padding-16">
+      <p>Copyright ⓒ Fastblock. All Rights Reserved.</p>
+    </footer>
 </template>
