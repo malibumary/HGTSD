@@ -316,7 +316,6 @@ export default {
         document.getElementById('id01').style.display = 'none'
       } else {
         //  Fail to import token address
-
         alert('Fail!')
       }
     }
