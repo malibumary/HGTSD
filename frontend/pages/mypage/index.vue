@@ -311,7 +311,6 @@ export default {
         newBtn.innerHTML = '123'
 
         tokenBtns.appendChild(newBtn)
-
         alert('Sucess!')
         document.getElementById('id01').style.display = 'none'
       } else {
