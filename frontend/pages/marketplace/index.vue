@@ -1,247 +1,21 @@
 <template>
-  <div>
-    <!-- Header -->
-    <header class="w3-container w3-theme w3-padding" id="myHeader">
-      <div class="w3-center">
-      <h1 class="w3-xxxlarge w3-animate-bottom">My page</h1>
-        <div class="w3-padding-32">
-          <button class="w3-btn w3-xlarge w3-dark-grey w3-hover-light-grey" style="font-weight:900;">Fastblock</button>
-        </div>
-      </div>
-    </header>
-
-    <!-- Modal -->
-    <div id="id01" class="w3-modal">
-        <div style="top:30%;" class="w3-modal-content w3-card-4 w3-animate-bottom">
-          <header class="w3-container w3-theme-l1"> 
-            <span onclick="document.getElementById('id01').style.display='none'"
-            class="w3-button w3-display-topright">×</span>
-            <h4>Add new token</h4>
-          </header>
-          
-          <div class="w3-padding">
-            <form class="w3-container w3-card-4">
-              <div class="w3-section">
-                <label>Address</label>
-                <input class="w3-input" type="text" required>
-              </div>
-            </form>
-          </div>
-
-          <footer class="w3-container w3-theme-l1 w3-padding">
-            <div class="w3-center">
-              <div class="w3-half">
-                <button class="w3-bar-item w3-button w3-teal" @click="addNewToken()" >Add</button>
-              </div>
-              <div class="w3-half">
-                <button class="w3-bar-item w3-button w3-red" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
-              </div>
-            </div>
-          </footer>
-
-        </div>
-    </div>
-
-    <div id="deposit" class="w3-modal">
-        <div style="top:30%;" class="w3-modal-content w3-card-4 w3-animate-bottom">
-          <header class="w3-container w3-theme-l1"> 
-            <span onclick="document.getElementById('id01').style.display='none'"
-            class="w3-button w3-display-topright">×</span>
-            <h4>Deposit</h4>
-          </header>
-          
-          <div class="w3-padding">
-            <form class="w3-container w3-card-4">
-              <div class="w3-section">
-                <label>Quantity (Max : 0)</label>
-                <input class="w3-input" type="text" required>
-              </div>
-            </form>
-          </div>
-
-          <footer class="w3-container w3-theme-l1 w3-padding">
-            <div class="w3-center">
-              <div class="w3-half">
-                <button class="w3-bar-item w3-button w3-teal">Deposit</button>
-              </div>
-              <div class="w3-half">
-                <button class="w3-bar-item w3-button w3-red" onclick="document.getElementById('deposit').style.display='none'">Cancel</button>
-              </div>
-            </div>
-          </footer>
-
-        </div>
-    </div>
-
-
-    <div id="withdraw" class="w3-modal">
-        <div style="top:30%;" class="w3-modal-content w3-card-4 w3-animate-bottom">
-          <header class="w3-container w3-theme-l1"> 
-            <span onclick="document.getElementById('id01').style.display='none'"
-            class="w3-button w3-display-topright">×</span>
-            <h4>Withdraw</h4>
-          </header>
-          
-          <div class="w3-padding">
-            <form class="w3-container w3-card-4">
-              <div class="w3-section">
-                <label>Quantity (Max : 0)</label>
-                <input class="w3-input" type="text" required>
-              </div>
-            </form>
-          </div>
-
-          <footer class="w3-container w3-theme-l1 w3-padding">
-            <div class="w3-center">
-              <div class="w3-half">
-                <button class="w3-bar-item w3-button w3-teal">Withdraw</button>
-              </div>
-              <div class="w3-half">
-                <button class="w3-bar-item w3-button w3-red" onclick="document.getElementById('withdraw').style.display='none'">Cancel</button>
-              </div>
-            </div>
-          </footer>
-
-        </div>
-    </div>
-
-
-
-
-    <div class="w3-row-padding w3-margin-top">
-
-      <div class="w3-first">
-        <div class="w3-card w3-container">
-        <header class="w3-container">
-            <h2 class="w3-center">My wallet</h2>
-        </header>
-
-        <div class="w3-row">
-          <div class="w3-col s2 w3-center">
-
-            <i class="fa fa-address-book w3-margin-bottom w3-text-theme" style="font-size:120px"></i>
-
-          </div>
-          
-        <p>Adress : 0x559A679811F932924e5Cd5569f0192167173DCd8</p>
-        <div class="w3-col s10 w3-center">
-          </div>
-          <div class="w3-col s10 w3-center w3-padding">
-            <div class="w3-col s2">
-              <h4>ETH : 0</h4>
-              <button class="w3-button w3-black" onclick="document.getElementById('deposit').style.display='block'">Deposit</button>
-            </div>
-            <div class="w3-col s2">
-              <h4>WETH : 0</h4>
-              <button class="w3-button w3-black" onclick="document.getElementById('withdraw').style.display='block'">Withdraw</button>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-
-    </div>
-
-    <hr>
-
-    <div class="w3-row-padding w3-margin-top">
-      <div class="w3-first">
-        <div class="w3-card w3-container" style="min-height:320px">
-        <header class="w3-container">
-            <h2 class="w3-center">ERC-721 tokens</h2>
-            <button class="w3-bar-item w3-button w3-teal w3-right" 
-            onclick="document.getElementById('id01').style.display='block'">Add token</button>
-        </header>
-        <br>
-
-        <div class="w3-border">
-          <div id="tokenBtns" class="w3-bar w3-theme">
-            <button class="w3-bar-item w3-button testbtn w3-padding-16" @click="openCity('London')">London</button>
-            <button class="w3-bar-item w3-button testbtn w3-padding-16" @click="openCity('Paris')">Paris</button>
-            <button class="w3-bar-item w3-button testbtn w3-padding-16" @click="openCity('Tokyo')">Tokyo</button>
-          </div>
-
-          <div id="London" class="w3-container token w3-animate-opacity">
-            <br>
-            <div>
-              <vue-good-table
-                :columns="columns"
-                :rows="rows"
-                :search-options="{
-                  enabled: true,
-                }"
-                :pagination-options="{
-                  enabled: true,
-                  perPage: 5,
-                }"
-                styleClass="vgt-table striped bordered"/>
-            </div>
-            <br>
-          </div>
-
-          <div id="Paris" class="w3-container token w3-animate-opacity">
-            <h2>Paris</h2>
-            <p>Paris is the capital of France.</p>
-            <p>The Paris area is one of the largest population centers in Europe, with more than 12 million inhabitants.</p>
-          </div>
-
-          <div id="Tokyo" class="w3-container token w3-animate-opacity">
-            <h2>Tokyo</h2>
-            <p>Tokyo is the capital of Japan.</p>
-            <p>It is the center of the Greater Tokyo Area, and the most populous metropolitan area in the world.</p>
-          </div>
-        </div>
-
-        <br>
-        
-        </div>
-      </div>
-    </div>
-    <hr>
-  </div>
+    <div>
+        <h2>My page</h2>
+        <button class="buy" @click="getaccounts">주소 얻어오기</button>
+        <button class="issue721" @click="make721">721발행</button>
+        <button class="mint" @click="mint">주조</button>
+        <p> 사용자 account address :  {{ this.accounts }}</p> 
+    </div> 
 </template>
 
 <script>
 import * as Web3 from 'web3'
-import Vue from 'vue'
-import VueGoodTable from 'vue-good-table'
-// import the styles 
-import 'vue-good-table/dist/vue-good-table.css'
-
-Vue.use(VueGoodTable)
-
 export default {
   data () {
     return {
       accounts: [],
       web3js: null,
-      output: null,
-      columns: [
-
-        {
-          label: '#',
-          field: 'id',
-          type: 'number',
-          filterOptions: {
-            enabled: true
-          }
-        },
-        {
-          label: 'Image',
-          field: 'image'
-        },
-        {
-          label: 'TokenId',
-          field: 'tokenId'
-        },
-        {
-          label: 'Description',
-          field: 'description'
-        }
-      ],
-      rows: [
-
-      ]
+      output: null
     }
   },
   async mounted () {
@@ -254,8 +28,6 @@ export default {
         this.web3js = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
       }
     })
-    var mybtn = document.getElementsByClassName('testbtn')[0]
-    mybtn.click()
   },
   methods: {
     async getaccounts () {
@@ -283,40 +55,6 @@ export default {
           console.error(error)
         }
       })
-    },
-    async openCity (cityName) {
-      var i, thisBtn
-      var x = document.getElementsByClassName('token')
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = 'none'
-      }
-      var activebtn = document.getElementsByClassName('testbtn')
-      for (i = 0; i < x.length; i++) {
-        activebtn[i].className = activebtn[i].className.replace(' w3-dark-grey', '')
-        if (activebtn[i].innerHTML === cityName) {
-          thisBtn = activebtn[i]
-        }
-      }
-      document.getElementById(cityName).style.display = 'block'
-      thisBtn.className += ' w3-dark-grey'
-    },
-
-    async addNewToken () {
-      var a = true
-      if (a) {
-        //  Success to import token address
-        var tokenBtns = document.getElementById('tokenBtns')
-        var newBtn = document.createElement('button')
-        newBtn.setAttribute('class', 'w3-bar-item w3-button testbtn w3-padding-16')
-        newBtn.innerHTML = '123'
-
-        tokenBtns.appendChild(newBtn)
-        alert('Sucess!')
-        document.getElementById('id01').style.display = 'none'
-      } else {
-        //  Fail to import token address
-        alert('Fail!')
-      }
     }
   }
 }

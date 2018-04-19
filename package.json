@@ -19,6 +19,7 @@
     "express": "^4.15.3",
     "nuxt": "^1.0.0-rc3",
     "source-map-support": "^0.4.15",
+    "vue-good-table": "^2.4.0",
     "web3": "^0.20.0"
   },
   "devDependencies": {
