@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
-import relay from './relayapi'
-import mypage from './mypageapi'
+import relay from './relay'
+import mypage from './mypage'
 
 const router = Router()
 

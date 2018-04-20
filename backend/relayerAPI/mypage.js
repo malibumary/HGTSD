@@ -9,7 +9,7 @@ var owned721address = ['0x7c68a2160575132fc9099b3573fdf1902c35c7fd', '0xc29fb173
 /* GET orderbook listing. */
 router.get('/getowend721address', (req, res, next) => {
     console.log('HTTP: GET getowend721address');
-
+    console.log(owned721address)
     res.json(owned721address)
 }); 
 
