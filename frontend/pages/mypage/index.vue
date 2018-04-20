@@ -123,12 +123,13 @@
 
           </div>
           
-        <p>Adress : 0x559A679811F932924e5Cd5569f0192167173DCd8</p>
+        <p> {{ account }}</p> 
+        <eth></eth>
         <div class="w3-col s10 w3-center">
           </div>
           <div class="w3-col s10 w3-center w3-padding">
             <div class="w3-col s2">
-              <h4>ETH : 0</h4>
+              <h4>{{ ethvalue }} ETH</h4>
               <button class="w3-button w3-black" onclick="document.getElementById('deposit').style.display='block'">Deposit</button>
             </div>
             <div class="w3-col s2">
@@ -213,9 +214,12 @@ Vue.use(VueGoodTable)
 export default {
   data () {
     return {
-      accounts: [],
+      account: null,
       web3js: null,
       output: null,
+      ethvalue: null,
+      wethvalue: null,
+      exchangecontract: null,
       columns: [
 
         {
@@ -246,21 +250,46 @@ export default {
   },
   async mounted () {
     let web3 = window.web3
-    window.addEventListener('load', function () {
-      if (typeof web3 !== 'undefined') {
-        this.web3js = new Web3(web3.currentProvider)
-      } else {
-        console.log('No web3? You should consider trying MetaMask!')
-        this.web3js = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
-      }
+    var self = this
+    var promise = new Promise(function (resolve, reject) {
+      window.addEventListener('load', function () {
+        if (typeof web3 !== 'undefined') {
+          this.web3js = new Web3(web3.currentProvider)
+          resolve('문제해결')
+        } else {
+          console.log('No web3? You should consider trying MetaMask!')
+          this.web3js = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+        }
+      })
+    })
+    promise.then(function (val) {
+      self.account = window.web3js.eth.accounts[0]
+      return self.account
+    }).then(function (val) {
+      window.web3js.eth.getBalance(val, function (error, result) {
+        if (!error) {
+          self.ethvalue = Math.floor(result.toNumber() / 10000000000000000) / 100
+        } else {
+          console.error(error)
+        }
+      })
+    }).then(function (val) {
+      var abi = [{'constant': true, 'inputs': [{'name': 'tAddresses', 'type': 'address[2]'}, {'name': 'tokenid', 'type': 'uint256'}], 'name': 'Tokencheck', 'outputs': [{'name': '', 'type': 'bool'}], 'payable': false, 'stateMutability': 'view', 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'amount', 'type': 'uint256'}], 'name': 'withdraw', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'addereV', 'type': 'address[3]'}, {'name': 'intV', 'type': 'uint256[2]'}], 'name': 'fillOrder', 'outputs': [{'name': '', 'type': 'bool'}], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'token', 'type': 'address'}, {'name': 'tokenid', 'type': 'uint256'}], 'name': 'depositToken', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'token', 'type': 'address'}, {'name': 'tokenid', 'type': 'uint256'}], 'name': 'withdrawToken', 'outputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function'}, {'constant': true, 'inputs': [{'name': '', 'type': 'address'}], 'name': 'weth', 'outputs': [{'name': '', 'type': 'uint256'}], 'payable': false, 'stateMutability': 'view', 'type': 'function'}, {'constant': false, 'inputs': [], 'name': 'deposit', 'outputs': [], 'payable': true, 'stateMutability': 'payable', 'type': 'function'}, {'constant': true, 'inputs': [{'name': '', 'type': 'address'}, {'name': '', 'type': 'address'}, {'name': '', 'type': 'uint256'}], 'name': 'NFtokens', 'outputs': [{'name': '', 'type': 'bool'}], 'payable': false, 'stateMutability': 'view', 'type': 'function'}]
+      var exContract = window.web3js.eth.contract(abi)
+      // address input으로 받을것.
+      var exContractInstance = exContract.at('0x0d61b0b3b3bbd2b2f6e9684aac100049277d7232')
+      exContractInstance.weth(self.account, function (error, result) {
+        if (!error) {
+          self.wethvalue = Math.floor(result.toNumber() / 10000000000000000) / 100
+        } else {
+          console.error(error)
+        }
+      })
     })
     var mybtn = document.getElementsByClassName('testbtn')[0]
     mybtn.click()
   },
   methods: {
-    async getaccounts () {
-      this.accounts = window.web3js.eth.accounts[0]
-    },
     async make721 () {
       window.web3js.eth.defaultAccount = window.web3js.eth.accounts[0]
       //  721token code
