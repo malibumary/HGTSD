@@ -154,12 +154,11 @@
             onclick="document.getElementById('id01').style.display='block'">Add token</button>
         </header>
         <br>
-
         <div class="w3-border">
           <div id="tokenBtns" class="w3-bar w3-theme">
-            <button class="w3-bar-item w3-button testbtn w3-padding-16" @click="openCity('London')">London</button>
-            <button class="w3-bar-item w3-button testbtn w3-padding-16" @click="openCity('Paris')">Paris</button>
-            <button class="w3-bar-item w3-button testbtn w3-padding-16" @click="openCity('Tokyo')">Tokyo</button>
+            <li v-for="(owned721address, index) in owned721addresses" :key="index" class="owned721addresstaps">
+              <button class="w3-bar-item w3-button testbtn w3-padding-16" @click="openCity('London')">{{ owned721address }}</button>
+            </li>            
           </div>
 
           <div id="London" class="w3-container token w3-animate-opacity">
@@ -209,7 +208,7 @@ import VueGoodTable from 'vue-good-table'
 // import the styles 
 import 'vue-good-table/dist/vue-good-table.css'
 import axios from '~/plugins/axios'
-
+import * as eutil from 'ethereumjs-util'
 Vue.use(VueGoodTable)
 
 export default {
@@ -219,6 +218,7 @@ export default {
   },
   data () {
     return {
+      test: null,
       message: null,
       account: null,
       web3js: null,
@@ -227,6 +227,7 @@ export default {
       wethvalue: null,
       exchangecontract: null,
       owner: null,
+      owned721addresses: null,
       columns: [
 
         {
@@ -262,6 +263,7 @@ export default {
       window.addEventListener('load', function () {
         if (typeof web3 !== 'undefined') {
           this.web3js = new Web3(web3.currentProvider)
+          this.test = eutil
           resolve('문제해결')
         } else {
           console.log('No web3? You should consider trying MetaMask!')
@@ -322,38 +324,29 @@ export default {
       })
     },
     async openCity (cityName) {
-      var i, thisBtn
-      var x = document.getElementsByClassName('token')
-      for (i = 0; i < x.length; i++) {
-        x[i].style.display = 'none'
-      }
-      var activebtn = document.getElementsByClassName('testbtn')
-      for (i = 0; i < x.length; i++) {
-        activebtn[i].className = activebtn[i].className.replace(' w3-dark-grey', '')
-        if (activebtn[i].innerHTML === cityName) {
-          thisBtn = activebtn[i]
-        }
-      }
-      document.getElementById(cityName).style.display = 'block'
-      thisBtn.className += ' w3-dark-grey'
+      console.log(cityName)
     },
 
     async addNewToken () {
-      var a = true
-      if (a) {
-        //  Success to import token address
-        var tokenBtns = document.getElementById('tokenBtns')
-        var newBtn = document.createElement('button')
-        newBtn.setAttribute('class', 'w3-bar-item w3-button testbtn w3-padding-16')
-        newBtn.innerHTML = '123'
+      let { data } = await axios.post('/v0/add721address', {user: 'velopert', message: 'hi'})
+      console.log(data)
+      let { data2 } = await axios.get('/v0/getowend721address')
+      console.log(data2)
+      // var a = true
+      // if (a) {
+      //   //  Success to import token address
+      //   var tokenBtns = document.getElementById('tokenBtns')
+      //   var newBtn = document.createElement('button')
+      //   newBtn.setAttribute('class', 'w3-bar-item w3-button testbtn w3-padding-16')
+      //   newBtn.innerHTML = '123'
 
-        tokenBtns.appendChild(newBtn)
-        alert('Sucess!')
-        document.getElementById('id01').style.display = 'none'
-      } else {
-        //  Fail to import token address
-        alert('Fail!')
-      }
+      //   tokenBtns.appendChild(newBtn)
+      //   alert('Sucess!')
+      //   document.getElementById('id01').style.display = 'none'
+      // } else {
+      //   //  Fail to import token address
+      //   alert('Fail!')
+      // }
     },
     async depositEther (inputvalue) {
       inputvalue = inputvalue * 1000000000000000000
@@ -370,6 +363,8 @@ export default {
         }
       })
       this.message = 0
+      document.getElementById('deposit').style.display = 'none'
+      alert('Metamask에서 summit을 눌러주세요.\ntransaction이 포함된 block이 쌓이면 입금됩니다.')
     },
     async withdrawEther (inputvalue) {
       inputvalue = inputvalue * 1000000000000000000
@@ -386,6 +381,8 @@ export default {
         }
       })
       this.message = 0
+      document.getElementById('withdraw').style.display = 'none'
+      alert('Metamask에서 summit을 눌러주세요.\ntransaction이 포함된 block이 쌓이면 출금됩니다.')
     }
   }
 }

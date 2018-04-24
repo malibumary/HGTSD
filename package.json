@@ -16,6 +16,7 @@
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.18.2",
     "cross-env": "^5.0.1",
+    "ethereumjs-util": "^5.1.5",
     "express": "^4.15.3",
     "nuxt": "^1.0.0-rc3",
     "source-map-support": "^0.4.15",

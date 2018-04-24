@@ -2,7 +2,6 @@ import { BigNumber } from 'bignumber.js';
 import { Router } from 'express'
 
 const router = Router()
- 
 
 var owned721address = ['0x7c68a2160575132fc9099b3573fdf1902c35c7fd', '0xc29fb173dab16d2406072593e29008d84185eb3f'];
 
